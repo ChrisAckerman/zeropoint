@@ -2,12 +2,7 @@
 
 # OSX doesn't have dircolors (GNU) by default.
 if whence dircolors &>/dev/null; [[ $? -ne 0 ]]; then
-    dircolors() {
-        echo 'LS_COLORS=;'
-        echo 'export LS_COLORS;'
-        echo 'LSCOLORS=;'
-        echo 'export LSCOLORS;'
-    }
+    dircolors() {}
 fi
 
 zstyle ':completion:*' auto-description 'specify: %d'

@@ -17,6 +17,7 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zshhistory
 HISTSIZE=5000
 SAVEHIST=5000
 CLICOLOR=1
+LSCOLORS=ExFxCxDxBxegedabagacad
 
 export FPATH
 export PATH
@@ -24,3 +25,4 @@ export HISTFILE
 export HISTSIZE
 export SAVEHIST
 export CLICOLOR
+export LSCOLORS
