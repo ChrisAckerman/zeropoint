@@ -4,7 +4,7 @@ function() {
     _zeropoint_install_remote_temp=$(mktemp -d zeropoint.XXXXXXXXXX)
 
     _zeropoint_install_remote_cleanup() {
-        rm -rfq "$_zeropoint_install_remote_temp"
+        rm -rf "$_zeropoint_install_remote_temp"
         unset _zeropoint_install_remote_temp
         unset -f _zeropoint_install_remote_cleanup
     }
