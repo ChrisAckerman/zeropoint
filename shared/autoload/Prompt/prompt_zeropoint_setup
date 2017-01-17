@@ -4,7 +4,7 @@ autoload -Uz git_utils && git_utils
 
 prompt_zeropoint_setup() {
     if [[ -o login ]]; then
-        _PROMPT_ZEROPOINT_FIRST=true
+        export _PROMPT_ZEROPOINT_FIRST=${_PROMPT_ZEROPOINT_FIRST:-true}
     fi
 
     prompt_zeropoint_user_color=${1:-'green'}
@@ -13,7 +13,7 @@ prompt_zeropoint_setup() {
 
 	PS1='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%b%}:'
     PS1+='%{%B%F{$prompt_zeropoint_path_color}%}%~%{%f%b%}'
-    PS1+='${GIT_BRANCH:+:$GIT_BRANCH}\$ '
+    PS1+='$(prompt_zeropoint_git)\$ '
 	PS2='%_> '
 	PS3='?# '
 	PS4='+'
@@ -25,7 +25,7 @@ prompt_zeropoint_setup() {
 
 prompt_zeropoint_precmd() {
     # Print non-zero exit code and elapsed time if necessary.
-    if [[ clear != "$LAST_COMMAND" && -z "$_PROMPT_ZEROPOINT_FIRST" ]]; then
+    if [[ clear != "$LAST_COMMAND" && true != "$_PROMPT_ZEROPOINT_FIRST" ]]; then
         if [[ -n "$LAST_COMMAND" ]]; then
             local code=${LAST_COMMAND_EXIT_CODE:-0}
             local elapsed=${LAST_COMMAND_ELAPSED:-0}
@@ -48,10 +48,26 @@ prompt_zeropoint_precmd() {
     fi
 
     # Update the git branch/reference so it can be displayed in the prompt.
-    GIT_BRANCH=`git_branch || git_reference '#' || true`
-    [[ -n "$GIT_BRANCH" ]] && GIT_BRANCH='%{%B%F{$prompt_zeropoint_git_color}%}'"$GIT_BRANCH"'%{%f%b%}'
+    GIT_BRANCH=`git_branch || git_reference '#' || echo ''`
+    GIT_DIRTY=`git_dirty || echo 0`
 
-    unset _PROMPT_ZEROPOINT_FIRST
+    export _PROMPT_ZEROPOINT_FIRST=false
+}
+
+prompt_zeropoint_git() {
+    local prompt
+
+    if [[ -n "$GIT_BRANCH" ]]; then
+        prompt="$GIT_BRANCH"
+
+        if [[ "$GIT_DIRTY" -ne 0 ]]; then
+            prompt+='*'
+        fi
+
+        prompt=":%{%B%F{$prompt_zeropoint_git_color}%}${prompt}%{%f%b%}"
+    fi
+
+    echo -n $prompt
 }
 
 prompt_zeropoint_setup "$@"
