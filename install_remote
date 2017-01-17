@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+function() {
+    _zeropoint_install_remote_temp=$(mktemp -d zeropoint.XXXXXXXXXX)
+
+    _zeropoint_install_remote_cleanup() {
+        rm -rfq "$_zeropoint_install_remote_temp"
+        unset _zeropoint_install_remote_temp
+        unset -f _zeropoint_install_remote_cleanup
+    }
+    add-zsh-hook zshexit _install_remote_exit
+
+    git clone https://github.com/ChrisAckerman/zeropoint.git "$_zeropoint_install_remote_temp"
+
+    "$_zeropoint_install_remote_temp/install"
+
+    _zeropoint_install_remote_cleanup
+} || return $?
+
+zsh -l
+exit $?
