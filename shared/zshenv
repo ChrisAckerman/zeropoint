@@ -13,12 +13,14 @@ done
 
 mkdir -p "${ZDOTDIR:-$HOME}/.zautoload"
 
-[[ -z "$HISTFILE" ]] && HISTFILE=${ZDOTDIR:-$HOME}/.zshhistory
-[[ -z "$HISTSIZE" || 0 == "$HISTSIZE" ]] && HISTSIZE=5000
-[[ -z "$SAVEHIST" || 0 == "$SAVEHIST" ]] && SAVEHIST=5000
+HISTFILE=${ZDOTDIR:-$HOME}/.zshhistory
+HISTSIZE=5000
+SAVEHIST=5000
+CLICOLOR=1
 
 export FPATH
 export PATH
 export HISTFILE
 export HISTSIZE
 export SAVEHIST
+export CLICOLOR

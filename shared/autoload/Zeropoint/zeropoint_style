@@ -3,8 +3,10 @@
 # OSX doesn't have dircolors (GNU) by default.
 if whence dircolors &>/dev/null; [[ $? -ne 0 ]]; then
     dircolors() {
-        LS_COLORS=
-        export LS_COLORS
+        echo 'LS_COLORS=;'
+        echo 'export LS_COLORS;'
+        echo 'LSCOLORS=;'
+        echo 'export LSCOLORS;'
     }
 fi
 

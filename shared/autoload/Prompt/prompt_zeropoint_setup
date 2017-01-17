@@ -13,7 +13,7 @@ prompt_zeropoint_setup() {
 
 	PS1='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%b%}:'
     PS1+='%{%B%F{$prompt_zeropoint_path_color}%}%~%{%f%b%}'
-    PS1+='${GIT_BRANCH:+:%{%B%F{$prompt_zeropoint_git_color}%}$GIT_BRANCH%{%f%b%}\$ '
+    PS1+='${GIT_BRANCH:+:$GIT_BRANCH}\$ '
 	PS2='%_> '
 	PS3='?# '
 	PS4='+'
@@ -49,6 +49,7 @@ prompt_zeropoint_precmd() {
 
     # Update the git branch/reference so it can be displayed in the prompt.
     GIT_BRANCH=`git_branch || git_reference '#' || true`
+    [[ -n "$GIT_BRANCH" ]] && GIT_BRANCH='%{%B%F{$prompt_zeropoint_git_color}%}'"$GIT_BRANCH"'%{%f%b%}'
 
     unset _PROMPT_ZEROPOINT_FIRST
 }
