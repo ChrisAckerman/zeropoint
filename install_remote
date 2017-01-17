@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function() {
-    _zeropoint_install_remote_temp=$(mktemp -d zeropoint.XXXXXXXXXX)
+    _zeropoint_install_remote_temp=$(mktemp -d -t zeropoint.XXXXXXXXXX)
 
     _zeropoint_install_remote_cleanup() {
         rm -rf "$_zeropoint_install_remote_temp"
