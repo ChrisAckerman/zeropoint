@@ -9,7 +9,7 @@ function() {
         unset _zeropoint_install_remote_temp
         unset -f _zeropoint_install_remote_cleanup
     }
-    add-zsh-hook zshexit _install_remote_exit
+    add-zsh-hook zshexit _zeropoint_install_remote_cleanup
 
     git clone https://github.com/ChrisAckerman/zeropoint.git "$_zeropoint_install_remote_temp"
 
