@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 
+# OSX doesn't have dircolors (GNU) by default.
+if whence dircolors &>/dev/null; [[ $? -ne 0 ]]; then
+    dircolors() {
+        LS_COLORS=
+        export LS_COLORS
+    }
+fi
+
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
