@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# Use prompt themes.
+autoload -Uz promptinit && promptinit
+
+# Use modern auto complete.
+autoload -Uz compinit && compinit -1
+
+# Reference the .zopts file for default options.
+autoload -Uz zeropoint_opts && zeropoint_opts
+
+# Set Zeropoint default key bindings.
+autoload -Uz zeropoint_bindkey && zeropoint_bindkey
+
+# Set Zeropoint default styles.
+autoload -Uz zeropoint_style && zeropoint_style
+
+# Add Zeropoint hooks.
+autoload -Uz zeropoint_hooks && zeropoint_hooks
+
+# Source all files in .zshrc.d directory.
+autoload -Uz zeropoint_zshrcd && zeropoint_zshrcd

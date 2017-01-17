@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+local default_fpaths=(
+    "/usr/local/share/zeropoint/autoload/"*(N)
+    "${ZDOTDIR:-$HOME}/.zautoload"
+)
+
+local p; for p in $default_fpaths; do
+    if [[ ${fpath[(i)$p]} -gt ${#fpath} ]]; then
+        fpath=("$p" $fpath)
+    fi
+done
+
+mkdir -p "${ZDOTDIR:-$HOME}/.zautoload"
+
+[[ -z "$HISTFILE" ]] && HISTFILE=${ZDOTDIR:-$HOME}/.zshhistory
+[[ -z "$HISTSIZE" || 0 == "$HISTSIZE" ]] && HISTSIZE=5000
+[[ -z "$SAVEHIST" || 0 == "$SAVEHIST" ]] && SAVEHIST=5000
+
+export FPATH
+export PATH
+export HISTFILE
+export HISTSIZE
+export SAVEHIST

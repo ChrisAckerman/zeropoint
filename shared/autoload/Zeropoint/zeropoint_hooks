@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+
+_ZEROPOINT_NON_EMPTY_CMD=false
+
+chpwd() {
+
+}
+
+periodic() {
+
+}
+
+preexec() {
+    _ZEROPOINT_NON_EMPTY_CMD=true
+
+    LAST_COMMAND=$1
+    LAST_COMMAND_TIME=`date +%s`
+    LAST_COMMAND_EXIT_CODE=
+    LAST_COMMAND_ELAPSED=
+}
+
+precmd() {
+    local code=$?
+    local now=`date +%s`
+
+    if [[ "$_ZEROPOINT_NON_EMPTY_CMD" == true ]]; then
+        LAST_COMMAND_EXIT_CODE=$code
+        LAST_COMMAND_ELAPSED=$((now - LAST_COMMAND_TIME))
+    else
+        LAST_COMMAND=
+        LAST_COMMAND_TIME=
+    fi
+
+    _ZEROPOINT_NON_EMPTY_CMD=false
+}
+
+zshaddhistory() {
+
+}
+
+zshexit() {
+
+}
+
+return 0

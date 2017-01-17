@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+local RE_MATCH_PCRE=true
+
+[[ "$2" =~ "$1" ]]

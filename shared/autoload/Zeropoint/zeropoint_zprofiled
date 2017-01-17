@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+autoload -Uz _zeropoint_source
+
+local dir=${ZDOTDIR:-$HOME}/.zprofile.d/enabled
+
+mkdir -p "$dir"
+
+local files=("$dir/"*(N))
+
+_zeropoint_source $files
+
+return 0

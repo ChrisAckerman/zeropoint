@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+local reference=`git rev-parse --short HEAD 2>/dev/null`
+
+if [[ $? -eq 0 && -n "$reference" ]]; then
+    echo "$1$reference"
+    return 0
+fi
+
+return 1

@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+# Zeropoint default options.
+setopt \
+    hist_ignore_all_dups \
+    share_history \
+    complete_in_word \
+    always_to_end
+
+local file=${ZDOTDIR:-$HOME}/.zopt
+local line
+
+touch "$file"
+
+while read line; do
+    [[ -n "$line" ]] && setopt $line
+done < "$file"
+
+return 0

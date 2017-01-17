@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+autoload -Uz array_unique
+autoload -Uz array_unique_unshift
+
+local file=${ZDOTDIR:-$HOME}/.zfpath
+local line
+
+touch "$file"
+array_unique fpath
+
+while read line; do
+    array_unique_unshift fpath "${(e)line}"
+done < "$file"
+
+export FPATH
+
+return 0

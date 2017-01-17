@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+autoload -Uz array_unique
+autoload -Uz array_unique_unshift
+
+# Zeropoint default paths.
+array_unique_unshift path \
+    "$HOME/bin" \
+    "$HOME/.local/bin"
+
+local file=${ZDOTDIR:-$HOME}/.zpath
+local line
+
+touch "$file"
+array_unique path
+
+while read line; do
+    array_unique_unshift path "${(e)line}"
+done < "$file"
+
+export PATH
+
+return 0

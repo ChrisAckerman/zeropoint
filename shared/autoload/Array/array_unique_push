@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+autoload -Uz array_contains
+
+local ref=$1; shift
+local values=($@)
+local array=(${(P)ref})
+
+local value; for value in $values; do
+    array_contains array "$value"
+    [[ $? -ne 0 ]] && array+=("$value")
+done
+
+set -A "$ref" $array
+
+return 0

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+_optarg_zeropoint_check() {
+    if [[ array != "${(t)OPTARGS}" ]]; then
+        echo 'OPTARGS not initialized. Did you call options_init?'
+        return 1
+    fi
+
+    return 0
+}
+
+return 0

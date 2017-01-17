@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+autoload -Uz string_preg_match
+
+local file
+
+for file in $@; do
+    if [[ ! -f "$file" ]]; then
+        continue
+    fi
+
+    if string_preg_match '\.sh$' "$file" ]]; then
+        emulate sh
+        source "$file"
+        emulate zsh
+    else
+        source "$file"
+    fi
+done
+
+return 0

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# Use history substring completion with the up and down arrow keys.
+bindkey "$terminfo[kcuu1]" history-beginning-search-backward # Up
+bindkey "$terminfo[kcud1]" history-beginning-search-forward # Down
+#bindkey -M emacs '^P' history-beginning-search-backward
+#bindkey -M emacs '^N' history-beginning-search-forward
+#bindkey -M vicmd 'k' history-beginning-search-backward
+#bindkey -M vicmd 'j' history-beginning-search-forward

@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+autoload -Uz array_contains
+
+if [[ ${#${(P)1}} -lt 1 ]]; then
+    return 0
+fi
+
+local ref=$1; shift
+local indexes=($@)
+local array=()
+
+local i; for i in {${#${(P)ref}}..1}; do
+    array_contains indexes $i
+    [[ $? -ne 0 ]] && array=(${${(P)ref}[$i]} $array)
+done
+
+set -A "$ref" $array
+
+return 0

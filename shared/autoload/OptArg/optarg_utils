@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+autoload -Uz optarg_init
+autoload -Uz optarg_value
+autoload -Uz optarg_flag
+
+return 0

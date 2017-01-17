@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+autoload -Uz _optarg_zeropoint_check
+
+optarg_value() {
+    _optarg_zeropoint_check
+
+    local prefixes=(- --)
+    local name
+    local prefix
+    local flag
+    local index
+    local arg
+
+    for name in $@; do
+        for prefix in $prefixes; do
+            flag=$prefix$name
+
+            for index in {1..${#OPTARGS}}; do
+                arg="${OPTARGS[$index]}"
+
+                if [[ "$arg" == "$flag" ]]; then
+                    OPTARG=${OPTARGS[$((index+1))]}
+                    OPTARGS=(${OPTARGS[1,$((index-1))]} ${OPTARGS[$((index+2)),-1]})
+                    return 0
+                elif [[ "$arg" == "${flag}="* ]]; then
+                    OPTARG=${arg[$((${#flag}+2)),-1]}
+                    OPTARGS=(${OPTARGS[1,$((index-1))]} ${OPTARGS[$((index+1)),-1]})
+                    return 0
+                fi
+            done
+        done
+    done
+
+    OPTARG=
+
+    return 1
+}
+
+return 0

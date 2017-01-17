@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+local uid=`id -u`
+
+if [[ "$uid" -ne 0 ]]; then
+    echo 'install_shared must be run as root.'
+    return 1
+fi
+
+mkdir -p /usr/local/share/zeropoint
+
+local files=("${0:A:h}/shared/."*(N) "${0:A:h}/shared/"*(N))
+
+\cp -fvR $files /usr/local/share/zeropoint/

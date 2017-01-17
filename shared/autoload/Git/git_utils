@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+autoload -Uz git_branch
+autoload -Uz git_reference
+
+return 0

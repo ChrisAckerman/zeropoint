@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+local files=("${0:A:h}/user/."*(N) "${0:A:h}/user/"*(N))
+
+\cp -iv $files "$HOME"

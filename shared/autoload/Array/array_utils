@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+autoload -Uz array_contains
+autoload -Uz array_remove
+autoload -Uz array_unique
+autoload -Uz array_unique_push
+autoload -Uz array_unique_unshift
+
+return 0

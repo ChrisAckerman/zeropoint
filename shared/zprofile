@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+# Reference .zpath file for default paths.
+autoload -Uz zeropoint_path && zeropoint_path
+
+# Reference .zfpath file for default function autoload paths.
+autoload -Uz zeropoint_fpath && zeropoint_fpath
+
+# Source all files in .zprofile.d directory.
+autoload -Uz zeropoint_zprofiled && zeropoint_zprofiled
