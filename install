@@ -1,7 +1,12 @@
 #!/usr/bin/env zsh
 
 echo 'Installing shared components'
+echo
+
 sudo -s "${0:A:h}/install_shared"
 
+echo
 echo 'Installing user components'
+echo
+
 "${0:A:h}/install_user"

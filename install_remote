@@ -12,10 +12,13 @@ function() {
 
     git clone https://github.com/ChrisAckerman/zeropoint.git "$_zeropoint_install_remote_temp"
 
+    echo
+
     "$_zeropoint_install_remote_temp/install"
 
     _zeropoint_install_remote_cleanup
 } || return $?
 
+clear
 zsh -l
 exit $?
