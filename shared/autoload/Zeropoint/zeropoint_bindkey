@@ -4,8 +4,10 @@
 bindkey -e
 
 # Use history substring completion with the up and down arrow keys.
-bindkey "$terminfo[kcuu1]" history-beginning-search-backward # Up
-bindkey "$terminfo[kcud1]" history-beginning-search-forward # Down
+bindkey "OA" history-beginning-search-backward # Up
+bindkey "[A" history-beginning-search-backward # Up
+bindkey "OB" history-beginning-search-forward # Down
+bindkey "[B" history-beginning-search-forward # Down
 #bindkey -M emacs '^P' history-beginning-search-backward
 #bindkey -M emacs '^N' history-beginning-search-forward
 #bindkey -M vicmd 'k' history-beginning-search-backward
