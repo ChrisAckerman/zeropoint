@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 source /usr/local/share/zeropoint/zshrc
 
-prompt zeropoint
+prompt zeropoint -r -u

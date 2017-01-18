@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
-alias optarg_init='local OPTARGS=($@)'
+OPTARGS=($@)
 
 return 0

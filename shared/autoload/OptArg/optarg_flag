@@ -1,31 +1,25 @@
 #!/usr/bin/env zsh
-autoload -Uz _optarg_zeropoint_check
+autoload -Uz _optarg_init_check && _optarg_init_check
 
-optarg_flag() {
-    _optarg_zeropoint_check
+local prefixes=(- --)
+local name
+local prefix
+local flag
+local index
 
-    local prefixes=(- --)
-    local name
-    local prefix
-    local flag
-    local index
+for name in $@; do
+    for prefix in $prefixes; do
+        flag=$prefix$name
+        index=${OPTARGS[(i)$flag]}
 
-    for name in $@; do
-        for prefix in $prefixes; do
-            flag=$prefix$name
-            index=${OPTARGS[(i)$flag]}
-
-            if [[ $index -le ${#OPTARGS} ]]; then
-                OPTARG=$index
-                OPTARGS=(${OPTARGS[1,$((index-1))]} ${OPTARGS[$((index+1)),-1]})
-                return 0
-            fi
-        done
+        if [[ $index -le ${#OPTARGS} ]]; then
+            OPTARG=$index
+            OPTARGS=(${OPTARGS[1,$((index-1))]} ${OPTARGS[$((index+1)),-1]})
+            return 0
+        fi
     done
+done
 
-    OPTARG=
+OPTARG=
 
-    return 1
-}
-
-return 0
+return 1

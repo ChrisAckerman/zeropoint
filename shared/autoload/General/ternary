@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+local error=$?
+
+if [[ "$error" == 0 ]]; then
+    echo "${1:-true}"
+else
+    echo "$2"
+fi
+
+return 0

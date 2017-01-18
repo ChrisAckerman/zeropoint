@@ -1,26 +1,43 @@
 #!/usr/bin/env zsh
 autoload -Uz add-zsh-hook
+autoload -Uz optarg_utils && optarg_utils
+autoload -Uz ternary
 autoload -Uz git_utils && git_utils
 
 prompt_zeropoint_setup() {
-    if [[ -o login ]]; then
-        export _PROMPT_ZEROPOINT_FIRST=${_PROMPT_ZEROPOINT_FIRST:-true}
+    optarg_init $@
+    optarg_flag r right; local right=$(ternary)
+    optarg_flag u unicode; local unicode=$(ternary)
+    optarg_shift; prompt_zeropoint_user_color=${OPTARG:-green}
+    optarg_shift; prompt_zeropoint_path_color=${OPTARG:-blue}
+    optarg_shift; prompt_zeropoint_git_color=${OPTARG:-magenta}
+    [[ $unicode ]]; prompt_zeropoint_arrow=$(ternary ⯈ \$)
+
+    local base
+    base='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%}:'
+    base+='%{%F{$prompt_zeropoint_path_color}%}%~%{%f%}'
+    base+='$(prompt_zeropoint_git)%{%b%}'
+
+    if [[ $right ]]; then
+        PS1='%(!.#.$prompt_zeropoint_arrow) '
+        RPS1=" $base"
+    else
+        PS1="$base "'%(!.#.$prompt_zeropoint_arrow) '
+        RPS1=
     fi
 
-    prompt_zeropoint_user_color=${1:-'green'}
-    prompt_zeropoint_path_color=${2:-'blue'}
-    prompt_zeropoint_git_color=${3:-'magenta'}
-
-	PS1='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%b%}:'
-    PS1+='%{%B%F{$prompt_zeropoint_path_color}%}%~%{%f%b%}'
-    PS1+='$(prompt_zeropoint_git)\$ '
-	PS2='%_> '
+	PS2='%_ $prompt_zeropoint_arrow '
+    RPS2=
 	PS3='?# '
 	PS4='+'
 
 	prompt_opts=(cr percent subst)
 
     add-zsh-hook precmd prompt_zeropoint_precmd
+
+    if [[ -o login ]]; then
+        export _PROMPT_ZEROPOINT_FIRST=${_PROMPT_ZEROPOINT_FIRST:-true}
+    fi
 }
 
 prompt_zeropoint_precmd() {
@@ -64,7 +81,7 @@ prompt_zeropoint_git() {
             prompt+='*'
         fi
 
-        prompt=":%{%B%F{$prompt_zeropoint_git_color}%}${prompt}%{%f%b%}"
+        prompt=":%{%F{$prompt_zeropoint_git_color}%}${prompt}%{%f%}"
     fi
 
     echo -n $prompt
