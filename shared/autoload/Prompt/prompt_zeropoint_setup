@@ -13,16 +13,16 @@ prompt_zeropoint_setup() {
     optarg_shift; prompt_zeropoint_git_color=${OPTARG:-magenta}
     [[ $unicode ]]; prompt_zeropoint_arrow=$(ternary ⯈ \$)
 
-    local base
-    base='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%}:'
-    base+='%{%F{$prompt_zeropoint_path_color}%}%~%{%f%}'
-    base+='$(prompt_zeropoint_git)%{%b%}'
-
     if [[ $right ]]; then
         PS1='%(!.#.$prompt_zeropoint_arrow) '
-        RPS1=" $base"
+        RPS1='%{%B%F{$prompt_zeropoint_path_color}%}%~%{%f%}'
+        RPS1+='$(prompt_zeropoint_git)'
+        RPS1+='|%{%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%b%}'
     else
-        PS1="$base "'%(!.#.$prompt_zeropoint_arrow) '
+        PS1='%{%B%F{$prompt_zeropoint_user_color}%}%n@%M%{%f%}'
+        PS1+='$(prompt_zeropoint_git)'
+        PS1+='|%{%F{$prompt_zeropoint_path_color}%}%~%{%f%}'
+        PS1+='%{%b%} %(!.#.$prompt_zeropoint_arrow) '
         RPS1=
     fi
 
@@ -72,19 +72,19 @@ prompt_zeropoint_precmd() {
 }
 
 prompt_zeropoint_git() {
-    local prompt
+    local gitprompt
 
     if [[ -n "$GIT_BRANCH" ]]; then
-        prompt="$GIT_BRANCH"
+        gitprompt="$GIT_BRANCH"
 
         if [[ "$GIT_DIRTY" -ne 0 ]]; then
-            prompt+='*'
+            gitprompt+='*'
         fi
 
-        prompt=":%{%F{$prompt_zeropoint_git_color}%}${prompt}%{%f%}"
+        gitprompt="|%{%F{$prompt_zeropoint_git_color}%}${gitprompt}%{%f%}"
     fi
 
-    echo -n $prompt
+    echo -n $gitprompt
 }
 
 prompt_zeropoint_setup "$@"
